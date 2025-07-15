@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #0f4c75;
+  color: white;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 22px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.nav a {
+  color: white;
+  padding: 12px 10px;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: block;
+  transition: background 0.3s;
+}
+
+.nav a.active,
+.nav a:hover {
+  background-color: #3282b8;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f5f5f5;
+  overflow-y: auto;
+}

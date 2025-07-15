@@ -1,0 +1,92 @@
+<div class="leave-container">
+  <!-- Header -->
+  <div class="leave-header">
+    <h2>Leave Management</h2>
+    <button class="btn-primary" (click)="openLeaveModal()">+ Add Leave</button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="leave-tabs">
+    <button [class.active]="selectedTab === 'all'" (click)="selectedTab = 'all'">All</button>
+    <button [class.active]="selectedTab === 'pending'" (click)="selectedTab = 'pending'">Pending</button>
+    <button [class.active]="selectedTab === 'approved'" (click)="selectedTab = 'approved'">Approved</button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-responsive">
+    <table class="leave-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Employee ID</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Days</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let leave of filteredLeaves; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ leave.employeeId }}</td>
+          <td>{{ leave.fromDate | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ leave.toDate | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ leave.noOfDays }}</td>
+          <td>{{ leave.leaveType }}</td>
+          <td>
+            <span [ngClass]="leave.isApproved ? 'badge-approved' : 'badge-pending'">
+              {{ leave.isApproved ? 'Approved' : 'Pending' }}
+            </span>
+          </td>
+          <td class="actions">
+            <ng-container *ngIf="!leave.isApproved">
+              <button class="btn-approve" (click)="approveLeave(leave.leaveId)">approve</button>
+              <button class="btn-reject" (click)="rejectLeave(leave.leaveId)">reject</button>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" *ngIf="isModalOpen">
+  <div class="modal">
+    <h3>Add Leave Request</h3>
+    <form (ngSubmit)="submitLeave()">
+      <div class="form-group">
+        <label>Leave Type</label>
+        <select [(ngModel)]="newLeave.leaveType" name="leaveType" required class="styled-select">
+          <option value="" disabled selected>Select leave type</option>
+          <option value="Casual">Casual</option>
+          <option value="Sick">Sick</option>
+          <option value="Paid">Paid</option>
+          <option value="Unpaid">Unpaid</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>From</label>
+        <input type="date" [(ngModel)]="newLeave.fromDate" name="fromDate" required />
+      </div>
+
+      <div class="form-group">
+        <label>To</label>
+        <input type="date" [(ngModel)]="newLeave.toDate" name="toDate" required />
+      </div>
+
+      <div class="form-group">
+        <label>Details</label>
+        <textarea rows="3" [(ngModel)]="newLeave.details" name="details" required></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Submit</button>
+        <button type="button" class="btn-cancel" (click)="closeLeaveModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

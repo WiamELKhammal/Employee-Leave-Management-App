@@ -1,0 +1,17 @@
+<div class="container">
+  <aside class="sidebar">
+    <h3 class="logo">Admin Panel</h3>
+    <nav class="nav">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/employee" routerLinkActive="active">Employee</a>
+      <a routerLink="/leave" routerLinkActive="active">Leave</a>
+      <a routerLink="/report" routerLinkActive="active">Report</a>
+      <a routerLink="/settings" routerLinkActive="active">Settings</a>
+      <a (click)="logout()">Logout</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
